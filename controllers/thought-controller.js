@@ -26,7 +26,7 @@ const thoughtController = {
 	createThought: async (req, res) => {
 		try {
 			const thought = await Thought.create(req.body);
-			await User.findByIdAndUpdate(req.body.userId, { $push: { thoughts: thought._id } }, { new: true });
+			await User.findOneAndUpdate({ username: req.body.username }, { $push: { thoughts: thought._id } }, { new: true });
 			res.json(thought);
 		} catch (error) {
 			res.status(400).json(error);
